@@ -30,6 +30,13 @@ namespace Chao_Blog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            // 注册Swagger服务
+            services.AddSwaggerGen(c =>
+            {
+                // 添加文档信息
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo(){ Title = "CoreWebApi", Version = "v1" });
+            });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<RoutineDbContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection"),new MySqlServerVersion(new Version(8,0,24))));
             services.AddControllers();
         }
@@ -43,6 +50,16 @@ namespace Chao_Blog
             }
 
             app.UseHttpsRedirection();
+
+            // 启用Swagger中间件
+            app.UseSwagger();
+
+            // 配置SwaggerUI
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CoreWebApi");
+
+            });
 
             app.UseRouting();
 
