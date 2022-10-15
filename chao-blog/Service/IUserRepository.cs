@@ -10,8 +10,12 @@ namespace Chao_Blog.Data.Services
     {
         Task<IEnumerable<User>> GetResumesAsync();
         Task<User> GetUserAsync(Guid userId);
+        Task<User> GetUserByEmailAsync(string email);
+        // Task<User> GetUserLoginAsync(string email,string password);
+        Task<bool> CheckPasswordAsync(string email, string password);
+
         Task<IEnumerable<User>> GetUsersAsync(IEnumerable<Guid> userIds);
-        void AddUser(User user);
+        void AddUser(User user); 
         void UpdateUser(User user);
         void DeleteUser(User user);
         Task<bool> UserExistAsync(Guid userId);

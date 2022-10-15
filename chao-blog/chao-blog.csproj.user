@@ -5,6 +5,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <ActiveDebugProfile>Chao_Blog</ActiveDebugProfile>
-    <NameOfLastUsedPublishProfile>E:\code\chao-blog\chao-blog\chao-blog\Properties\PublishProfiles\chao-blog20220921160519 - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>D:\code\c#\chao-blog\chao-blog\Properties\PublishProfiles\chao-blog-staging - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

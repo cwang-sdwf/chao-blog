@@ -1,10 +1,13 @@
 using Chao_Blog.Data;
 using Chao_Blog.Data.Services;
 using Chao_Blog.Entity;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Chao_Blog.Services
@@ -23,15 +26,50 @@ namespace Chao_Blog.Services
                 throw new ArgumentNullException(nameof(user));
             }
             user.Id = Guid.NewGuid();
-            foreach(var resume in user.Resumes)
-            {
-                resume.Id = Guid.NewGuid();
-            }
+            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8); // divide by 8 to convert bits to bytes
+            
+            // derive a 256-bit subkey (use HMACSHA256 with 100,000 iterations)
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: user.Password,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA256,
+                iterationCount: 100000,
+                numBytesRequested: 256 / 8));
+
+            user.Password = hashed;
+            user.Salt = Convert.ToBase64String(salt);
+
+            // foreach (var resume in user.Resumes)
+            // {
+            //     resume.Id = Guid.NewGuid();
+            // }
 
             _context.Users.Add(user);
         }
 
-       
+
+        public async Task<bool> CheckPasswordAsync(string email, string password)
+        {
+            // byte[] salt = RandomNumberGenerator.GetBytes(128 / 8); // divide by 8 to convert bits to bytes
+
+            // derive a 256-bit subkey (use HMACSHA256 with 100,000 iterations)
+            User user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: password,
+                salt: Convert.FromBase64String(user.Salt),
+                prf: KeyDerivationPrf.HMACSHA256,
+                iterationCount: 100000,
+                numBytesRequested: 256 / 8));
+            if (hashed == user.Password)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
 
         public void AddResume(Guid userId, Resume resume)
         {
@@ -100,6 +138,44 @@ namespace Chao_Blog.Services
 
             return await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
         }
+
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            if (email == null)
+            {
+                throw new ArgumentNullException(nameof(email));
+            }
+
+            return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+        }
+
+        // public async Task<User> GetUserLoginAsync(string email,string password)
+        // {
+        //     if (email == null)
+        //     {
+        //         throw new ArgumentNullException(nameof(email));
+        //     }
+        //
+        //     if (password == null)
+        //     {
+        //         throw new ArgumentNullException(nameof(password));
+        //     }
+        //
+        //     User user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+        //
+        //     string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+        //         password: password,
+        //         salt: Convert.FromBase64String(user.Salt),
+        //         prf: KeyDerivationPrf.HMACSHA256,
+        //         iterationCount: 100000,
+        //         numBytesRequested: 256 / 8));
+        //     if (hashed == user.Password)
+        //     {
+        //         return user;
+        //     }
+        //
+        //     return null;
+        // }
 
         public async Task<Resume> GetResumeAsync(Guid userId, Guid resumeId)
         {

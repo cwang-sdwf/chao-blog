@@ -1,24 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\code\\chao-blog\\chao-blog\\chao-blog\\chao-blog.csproj": {}
+    "D:\\code\\c#\\chao-blog\\chao-blog\\chao-blog.csproj": {}
   },
   "projects": {
-    "E:\\code\\chao-blog\\chao-blog\\chao-blog\\chao-blog.csproj": {
+    "D:\\code\\c#\\chao-blog\\chao-blog\\chao-blog.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\code\\chao-blog\\chao-blog\\chao-blog\\chao-blog.csproj",
+        "projectUniqueName": "D:\\code\\c#\\chao-blog\\chao-blog\\chao-blog.csproj",
         "projectName": "chao-blog",
-        "projectPath": "E:\\code\\chao-blog\\chao-blog\\chao-blog\\chao-blog.csproj",
-        "packagesPath": "C:\\Users\\Chao Wang\\.nuget\\packages\\",
-        "outputPath": "E:\\code\\chao-blog\\chao-blog\\chao-blog\\obj\\",
+        "projectPath": "D:\\code\\c#\\chao-blog\\chao-blog\\chao-blog.csproj",
+        "packagesPath": "C:\\Users\\chao\\.nuget\\packages\\",
+        "outputPath": "D:\\code\\c#\\chao-blog\\chao-blog\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Chao Wang\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\chao\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -46,6 +45,22 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.9, )"
+            },
+            "Microsoft.AspNetCore.Cors": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.9, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[6.0.9, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.9, )"
@@ -59,6 +74,16 @@
             "Microsoft.EntityFrameworkCore.Relational.Design": {
               "target": "Package",
               "version": "[1.1.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.9, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
